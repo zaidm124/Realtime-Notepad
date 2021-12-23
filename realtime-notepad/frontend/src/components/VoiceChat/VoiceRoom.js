@@ -88,7 +88,7 @@ function VoiceRoom(props) {
     video.addEventListener("loadedmetadata", () => {
       video.play();
     });
-    // VideoGrid.append(video);
+    VideoGrid.append(video);
   };
 
   const muteUnmute = () => {
