@@ -8,10 +8,26 @@ function VoiceRoom(props) {
   const myVideo = document.createElement("video");
   myVideo.muted = true;
 
-  let peer = new Peer(undefined, {
-    key: "peerjs",
-    debug: 2,
-    secure: process.env.REACT_APP_ENV === "PRODUCTION" ? true : false, // secure : false for http connection
+  // let peer = new Peer(undefined, {
+  //   key: "peerjs",
+  //   debug: 2,
+  //   secure: process.env.REACT_APP_ENV === "PRODUCTION" ? true : false, // secure : false for http connection
+  // });
+
+  let peer = new Peer({
+    host: "realtime-notepad-voice.herokuapp.com",
+    port: 9000,
+    debug: true,
+    secure: true,
+    config: {
+      iceServers: [
+        {
+          url: "turn:numb.viagenie.ca",
+          credential: "muazkh",
+          username: "webrtc@live.com",
+        },
+      ],
+    },
   });
 
   // window.onbeforeunload = function (e) {
@@ -33,7 +49,7 @@ function VoiceRoom(props) {
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
-        video: false,
+        video: true,
         audio: true,
       })
       .then((stream) => {
